@@ -1,0 +1,32 @@
+name: Build and Deploy Docker Images to AWS ECR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Log in to Amazon ECR
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and Push fe Image
+        run: |
+          REPO_NAME="frontend"
+          IMAGE_URI="861276076873.dkr.ecr.us-east-1.amazonaws.com/backend-repository"
+          docker build -t $IMAGE_URI:latest ./fe
+          docker push $IMAGE_URI
+
+      - name: Build and Push be Image
+        run: |
+          REPO_NAME="backend"
+          IMAGE_URI="861276076873.dkr.ecr.us-east-1.amazonaws.com/frontend-repository"
+          docker build -t $IMAGE_URI:latest ./be
+          docker push $IMAGE_URI

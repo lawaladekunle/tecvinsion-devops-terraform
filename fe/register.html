@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register - TecVinson DevOps Students Registration</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffffff;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+        form {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            margin: 50px auto;
+            width: 40%;
+            border-radius: 10px;
+        }
+        input[type=text], input[type=email] {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+        }
+        input[type=submit] {
+            background-color: #ff4b2b;
+            color: white;
+            padding: 15px;
+            border: none;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        input[type=submit]:hover {
+            background-color: #ff416c;
+        }
+    </style>
+</head>
+<body>
+    <h1>Register a Student</h1>
+    <form action="http://localhost:5500/register" method="post">
+        <input type="text" name="first_name" placeholder="First Name" required />
+
+        <input type="text" name="last_name" placeholder="Last Name" required />
+
+        <input type="email" name="email" placeholder="Email" required />
+
+        <input type="submit" value="Register" />
+    </form>
+</body>
+</html>

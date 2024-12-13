@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Retrieve Students - TecVinson DevOps Students Registration</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            padding-top: 50px;
+            margin-bottom: 30px;
+            font-size: 36px;
+            text-shadow: 2px 2px #000000;
+        }
+        .table-wrapper {
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 0 auto;
+            width: 90%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            color: #333333;
+            font-size: 16px;
+            white-space: nowrap;
+        }
+        th {
+            background-color: #ffcc00;
+            color: #333333;
+            font-size: 18px;
+            text-transform: uppercase;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        tr:nth-child(odd) {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        tr:hover {
+            background-color: #ffe066;
+        }
+        td.user-emoji {
+            font-size: 24px;
+            text-align: center;
+        }
+        /* Customize scrollbar */
+        .table-wrapper::-webkit-scrollbar {
+            width: 10px;
+        }
+        .table-wrapper::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 5px;
+        }
+        .table-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Registered Students</h1>
+    <div class="table-wrapper">
+        <table id="students-table">
+            <thead>
+                <tr>
+                    <th style="width: 5%;"></th>
+                    <th style="width: 20%;">First Name</th>
+                    <th style="width: 20%;">Last Name</th>
+                    <th style="width: 35%;">Email</th>
+                    <th style="width: 20%;">Registration Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        fetch('http://localhost:5500/students')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const tableBody = document.querySelector('#students-table tbody');
+                if (data.length === 0) {
+                    const row = document.createElement('tr');
+                    const cell = document.createElement('td');
+                    cell.setAttribute('colspan', '5');
+                    cell.textContent = 'No students found.';
+                    cell.style.textAlign = 'center';
+                    row.appendChild(cell);
+                    tableBody.appendChild(row);
+                } else {
+                    data.forEach(student => {
+                        const row = document.createElement('tr');
+
+                        // User emoji
+                        const userCell = document.createElement('td');
+                        userCell.textContent = '👤';
+                        userCell.classList.add('user-emoji');
+                        row.appendChild(userCell);
+
+                        // First Name
+                        const firstNameCell = document.createElement('td');
+                        firstNameCell.textContent = student.first_name;
+                        row.appendChild(firstNameCell);
+
+                        // Last Name
+                        const lastNameCell = document.createElement('td');
+                        lastNameCell.textContent = student.last_name;
+                        row.appendChild(lastNameCell);
+
+                        // Email
+                        const emailCell = document.createElement('td');
+                        emailCell.textContent = student.email;
+                        row.appendChild(emailCell);
+
+                        // Registration Date
+                        const dateCell = document.createElement('td');
+                        const date = new Date(student.registration_date);
+                        dateCell.textContent = date.toLocaleString();
+                        row.appendChild(dateCell);
+
+                        tableBody.appendChild(row);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching students:', error);
+                const tableBody = document.querySelector('#students-table tbody');
+                const row = document.createElement('tr');
+                const cell = document.createElement('td');
+                cell.setAttribute('colspan', '5');
+                cell.textContent = 'Error fetching student data.';
+                cell.style.textAlign = 'center';
+                row.appendChild(cell);
+                tableBody.appendChild(row);
+            });
+    </script>
+</body>
+</html>
