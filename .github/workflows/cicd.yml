@@ -41,3 +41,45 @@ jobs:
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG ./be
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+
+  deploy-to-kubernetes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Configure kubectl
+        continue-on-error: true
+        run: |
+          aws eks get-token --cluster-name tecvinson-cluster | kubectl apply -f -
+          kubectl config current-context
+
+      - name: Deploy to FE Application to Kubernetes
+        continue-on-error: true
+        run: |
+          cat deployment.yaml
+          cat service.yaml
+          kubectl apply -f deployment.yaml
+          kubectl apply -f service.yaml
+          kubectl get deployments
+          kubectl get services
+        working-directory: ./fe
+
+      - name: Deploy to FE Application to Kubernetes
+        continue-on-error: true
+        run: |
+          cat deployment.yaml
+          cat service.yaml
+          kubectl apply -f deployment.yaml
+          kubectl apply -f service.yaml
+          kubectl get deployments
+          kubectl get services
+        working-directory: ./fe

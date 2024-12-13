@@ -1,6 +1,8 @@
-# Use the official Apache HTTP Server image
-FROM httpd:latest
+# Use the official Nginx image
+FROM nginx:latest
 
-# Copy all HTML files into the Apache document root
-COPY *.html /usr/local/apache2/htdocs/
+# Copy the custom Nginx configuration file
+COPY nginx.conf /etc/nginx/nginx.conf
 
+# Copy all HTML files into the Nginx document root
+COPY *.html /usr/share/nginx/html/

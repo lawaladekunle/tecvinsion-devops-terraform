@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-backend
+  namespace: tecvinson-app
+  labels:
+    app: flask-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flask-backend
+  template:
+    metadata:
+      labels:
+        app: flask-backend
+    spec:
+      containers:
+      - name: flask-backend
+        image: 861276076873.dkr.ecr.us-east-1.amazonaws.com/backend-repository:latest
+        ports:
+        - containerPort: 5500
+        env:
+        - name: FLASK_APP
+          value: "app.py"
+        - name: MYSQL_HOST
+          value: "tecvison-app-db"
+        - name: MYSQL_ROOT_PASSWORD
+          value: "rootpassword"
+        - name: MYSQL_DATABASE
+          value: "tecvinson_registration"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
