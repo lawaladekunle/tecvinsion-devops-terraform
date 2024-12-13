@@ -24,7 +24,7 @@ jobs:
         id: ecr-login
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build, tag, and push docker image to Amazon ECR
+      - name: Build, tag, and push FE docker image to Amazon ECR
         env:
           REGISTRY: '861276076873.dkr.ecr.us-east-1.amazonaws.com'
           REPOSITORY: 'frontend-repository'
@@ -33,7 +33,7 @@ jobs:
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG ./fe
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
-      - name: Build, tag, and push docker image to Amazon ECR
+      - name: Build, tag, and push BE docker image to Amazon ECR
         env:
           REGISTRY: '861276076873.dkr.ecr.us-east-1.amazonaws.com'
           REPOSITORY: 'backend-repository'
@@ -71,9 +71,9 @@ jobs:
           kubectl apply -f service.yaml
           kubectl get deployments
           kubectl get services
-        working-directory: ./fe
+        working-directory: ./kubernetes/fe
 
-      - name: Deploy to FE Application to Kubernetes
+      - name: Deploy to BE Application to Kubernetes
         continue-on-error: true
         run: |
           cat deployment.yaml
@@ -82,4 +82,4 @@ jobs:
           kubectl apply -f service.yaml
           kubectl get deployments
           kubectl get services
-        working-directory: ./fe
+        working-directory: ./kubernetes/be
