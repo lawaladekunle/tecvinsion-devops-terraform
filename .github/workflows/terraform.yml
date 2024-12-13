@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'final-lab/**'
 
 jobs:
   deploy:
