@@ -1,5 +1,5 @@
 # Use the official Nginx image
-FROM nginx:latest
+FROM 861276076873.dkr.ecr.us-east-1.amazonaws.com/nginx:v1
 
 # Copy the custom Nginx configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
