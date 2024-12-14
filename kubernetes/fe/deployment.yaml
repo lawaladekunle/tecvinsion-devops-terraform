@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: 861276076873.dkr.ecr.us-east-1.amazonaws.com/frontend-repository:db388645098597c29f336580a1a57af9e956daba
+        image: 861276076873.dkr.ecr.us-east-1.amazonaws.com/nginx:v1
         ports:
         - containerPort: 80
         resources:
