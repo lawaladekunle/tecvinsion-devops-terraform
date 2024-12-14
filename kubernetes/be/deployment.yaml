@@ -24,9 +24,12 @@ spec:
         - name: FLASK_APP
           value: "app.py"
         - name: MYSQL_HOST
-          value: "tecvison-app-db"
+          value: "your-rds-endpoint.rds.amazonaws.com"
         - name: MYSQL_ROOT_PASSWORD
-          value: "rootpassword"
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql-root-password
         - name: MYSQL_DATABASE
           value: "tecvinson_registration"
         resources:
