@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: flask-backend
-        image: 861276076873.dkr.ecr.us-east-1.amazonaws.com/backend-repository:019a445f2364ae07e4c5a54d5868e62cc42f43a1
+        image: 861276076873.dkr.ecr.us-east-1.amazonaws.com/backend-repository:latest
         ports:
         - containerPort: 5500
         env:
