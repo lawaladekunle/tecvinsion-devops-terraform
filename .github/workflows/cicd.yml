@@ -76,12 +76,16 @@ jobs:
           kubectl get services
         working-directory: ./kubernetes/fe
 
+      - name: Update Secrets for BE
+        continue-on-error: true
+        run: |
+          sed "s/REPLACE_WITH_BASE64_PASSWORD/$(echo -n ${{ secrets.DB_PASSWORD }} | base64)/g" secret.yaml | kubectl apply -f -
+
       - name: Deploy to BE Application to Kubernetes
         continue-on-error: true
         run: |
           cat deployment.yaml
           cat service.yaml
-          kubectl apply -f secret.yaml
           kubectl apply -f deployment.yaml
           kubectl apply -f service.yaml
           kubectl get deployments
