@@ -60,7 +60,7 @@ jobs:
       - name: Configure kubectl
         continue-on-error: true
         run: |
-          aws eks get-token --cluster-name tecvinson-cluster | kubectl apply -f -
+          aws eks update-kubeconfig --name tecvinson-cluster --region us-east-1
           kubectl config current-context
 
       - name: Deploy to FE Application to Kubernetes
