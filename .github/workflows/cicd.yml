@@ -61,8 +61,8 @@ jobs:
         continue-on-error: true
         id: get-image
         run: |
-          echo "fe_image=$(aws ecr describe-images --repository-name frontend-repository --query 'sort_by(imageDetails, &imagePushedAt)[-1]' --output text)" >> $GITHUB_ENV
-          echo "be_image=$(aws ecr describe-images --repository-name backend-repository --query 'sort_by(imageDetails, &imagePushedAt)[-1]' --output text)" >> $GITHUB_ENV
+          echo "fe_image=$(aws ecr describe-images --repository-name frontend-repository --query 'sort_by(imageDetails, &imagePushedAt)[-1].imageTags[0]' --output text)" >> $GITHUB_ENV
+          echo "be_image=$(aws ecr describe-images --repository-name backend-repository --query 'sort_by(imageDetails, &imagePushedAt)[-1].imageTags[0]' --output text)" >> $GITHUB_ENV
           echo "fe_image=$fe_image"
           echo "be_image=$be_image"
 
