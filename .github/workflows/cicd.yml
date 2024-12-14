@@ -72,7 +72,6 @@ jobs:
         run: |
           cat deployment.yaml
           cat service.yaml
-          kubectl get services -n kube-system
           kubectl apply -f deployment.yaml
           kubectl apply -f service.yaml
           kubectl apply -f ingress.yaml

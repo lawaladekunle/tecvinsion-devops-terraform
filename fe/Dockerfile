@@ -1,8 +1,11 @@
 # Use the official Nginx image
-FROM 861276076873.dkr.ecr.us-east-1.amazonaws.com/nginx:v1
+FROM nginx:latest
 
 # Copy the custom Nginx configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy all HTML files into the Nginx document root
 COPY *.html /usr/share/nginx/html/
+
+# Expose Nginx port
+EXPOSE 80
