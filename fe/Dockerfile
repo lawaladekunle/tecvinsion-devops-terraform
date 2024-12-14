@@ -4,6 +4,8 @@ FROM nginx:latest
 # Copy the custom Nginx configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
 
+COPY default.conf /etc/nginx/conf.d/default.conf
+
 # Copy all HTML files into the Nginx document root
 COPY *.html /usr/share/nginx/html/
 

@@ -72,9 +72,9 @@ jobs:
         run: |
           cat deployment.yaml
           cat service.yaml
-          kubectl apply -f deployment.yaml
-          kubectl apply -f service.yaml
-          kubectl apply -f ingress.yaml
+          kubectl apply -f deployment.yaml -n tecvinson-app
+          kubectl apply -f service.yaml -n tecvinson-app
+          kubectl apply -f ingress.yaml -n tecvinson-app
           kubectl get deployments
           kubectl get services
         working-directory: ./kubernetes/fe
@@ -90,8 +90,8 @@ jobs:
         run: |
           cat deployment.yaml
           cat service.yaml
-          kubectl apply -f deployment.yaml
-          kubectl apply -f service.yaml
+          kubectl apply -f deployment.yaml -n tecvinson-app
+          kubectl apply -f service.yaml -n tecvinson-app
           kubectl get deployments
           kubectl get services
         working-directory: ./kubernetes/be
