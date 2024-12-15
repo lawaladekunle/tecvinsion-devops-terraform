@@ -24,7 +24,7 @@ spec:
         - name: FLASK_APP
           value: "app.py"
         - name: MYSQL_HOST
-          value: "your-rds-endpoint.rds.amazonaws.com"
+          value: "titanium-database.c9gsoe2owgjn.us-east-1.rds.amazonaws.com"
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
