@@ -24,7 +24,7 @@ provider "aws" {
 
 # Private Subnets for Database
 resource "aws_subnet" "private_subnet1" {
-  vpc_id            = vpc-08fcbd2bedfbbddaa
+  vpc_id            = "vpc-08fcbd2bedfbbddaa"
   cidr_block        = "192.169.32.0/19"
   availability_zone = "us-east-1a"
 
@@ -35,7 +35,7 @@ resource "aws_subnet" "private_subnet1" {
 
 # Private Subnets for Database
 resource "aws_subnet" "private_subnet2" {
-  vpc_id            = vpc-08fcbd2bedfbbddaa
+  vpc_id            = "vpc-08fcbd2bedfbbddaa"
   cidr_block        = "192.169.64.0/19"
   availability_zone = "us-east-1b"
 
@@ -48,7 +48,7 @@ resource "aws_subnet" "private_subnet2" {
 resource "aws_security_group" "rds_sg" {
   name        = "rds-security-group"
   description = "Security group for RDS MySQL instance"
-  vpc_id      = vpc-08fcbd2bedfbbddaa
+  vpc_id      = "vpc-08fcbd2bedfbbddaa"
 
   ingress {
     from_port   = 3306
