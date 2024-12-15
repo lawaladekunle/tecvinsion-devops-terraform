@@ -25,7 +25,7 @@ provider "aws" {
 # Private Subnets for Database
 resource "aws_subnet" "private_subnet1" {
   vpc_id            = "vpc-08fcbd2bedfbbddaa"
-  cidr_block        = "192.169.32.0/19"
+  cidr_block        = "192.168.192.0/19"
   availability_zone = "us-east-1a"
 
   tags = {
@@ -36,7 +36,7 @@ resource "aws_subnet" "private_subnet1" {
 # Private Subnets for Database
 resource "aws_subnet" "private_subnet2" {
   vpc_id            = "vpc-08fcbd2bedfbbddaa"
-  cidr_block        = "192.169.64.0/19"
+  cidr_block        = "192.168.224.0/19"
   availability_zone = "us-east-1b"
 
   tags = {
