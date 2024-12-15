@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: flask-backend-ingress
+  namespace: tecvinson-app
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /api-uno
+            pathType: Prefix
+            backend:
+              service:
+                name: flask-backend-service
+                port:
+                  number: 5500
