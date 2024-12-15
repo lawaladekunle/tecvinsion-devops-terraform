@@ -22,26 +22,25 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# VPC Configuration
-resource "aws_vpc" "main" {
-  cidr_block           = "10.0.0.0/16"
-  enable_dns_hostnames = true
-  enable_dns_support   = true
+# Private Subnets for Database
+resource "aws_subnet" "private_subnet1" {
+  vpc_id            = vpc-08fcbd2bedfbbddaa
+  cidr_block        = "192.169.32.0/19"
+  availability_zone = "us-east-1a"
 
   tags = {
-    Name = "main-vpc"
+    Name = "Private Subnet 1"
   }
 }
 
 # Private Subnets for Database
-resource "aws_subnet" "private_subnets" {
-  count             = 2
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.${count.index + 1}.0/24"
-  availability_zone = "us-east-1${count.index == 0 ? "a" : "b"}"
+resource "aws_subnet" "private_subnet2" {
+  vpc_id            = vpc-08fcbd2bedfbbddaa
+  cidr_block        = "192.169.64.0/19"
+  availability_zone = "us-east-1b"
 
   tags = {
-    Name = "Private Subnet ${count.index + 1}"
+    Name = "Private Subnet 2"
   }
 }
 
@@ -49,7 +48,7 @@ resource "aws_subnet" "private_subnets" {
 resource "aws_security_group" "rds_sg" {
   name        = "rds-security-group"
   description = "Security group for RDS MySQL instance"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = vpc-08fcbd2bedfbbddaa
 
   ingress {
     from_port   = 3306
@@ -62,7 +61,7 @@ resource "aws_security_group" "rds_sg" {
 # RDS Subnet Group
 resource "aws_db_subnet_group" "private_subnet_group" {
   name       = "private-db-subnet-group"
-  subnet_ids = aws_subnet.private_subnets[*].id
+  subnet_ids = [aws_subnet.private_subnet1.id, aws_subnet.private_subnet2.id]
 
   tags = {
     Name = "Private DB Subnet Group"
