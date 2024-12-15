@@ -11,9 +11,9 @@ terraform {
 
   # Configure Remote State Backend (S3)
   backend "s3" {
-    bucket         = "titanium-devops-o1"
-    key            = "terraform/state"
-    region         = "us-east-1"
+    bucket = "titanium-devops-o1"
+    key    = "terraform/state"
+    region = "us-east-1"
   }
 }
 
@@ -71,20 +71,20 @@ resource "aws_db_subnet_group" "private_subnet_group" {
 
 # RDS MySQL Instance
 resource "aws_db_instance" "mysql_database" {
-  identifier             = "mysql-database"
-  engine                 = "mysql"
-  engine_version         = "8.0"
-  instance_class         = "db.t3.medium"
-  allocated_storage      = 20
-  storage_type           = "gp2"
-  
-  db_name                = "myapplication"
-  username               = "admin"
-  password               = var.db_password  # Set via environment variable or secret
-  
+  identifier        = "titanium-database"
+  engine            = "mysql"
+  engine_version    = "8.0"
+  instance_class    = "db.t3.medium"
+  allocated_storage = 20
+  storage_type      = "gp2"
+
+  db_name  = "myapplication"
+  username = "admin"
+  password = var.db_password # Set via environment variable or secret
+
   backup_retention_period = 7
   multi_az                = true
-  
+
   db_subnet_group_name   = aws_db_subnet_group.private_subnet_group.name
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
 
