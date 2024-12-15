@@ -1,13 +1,5 @@
-# Use the official Nginx image
-FROM nginx:latest
+# Use the official Apache HTTP Server image
+FROM httpd:latest
 
-# Copy the custom Nginx configuration file
-COPY nginx.conf /etc/nginx/nginx.conf
-
-COPY default.conf /etc/nginx/conf.d/default.conf
-
-# Copy all HTML files into the Nginx document root
-COPY *.html /usr/share/nginx/html/
-
-# Expose Nginx port
-EXPOSE 80
+# Copy all HTML files into the Apache document root
+COPY *.html /usr/local/apache2/htdocs/
